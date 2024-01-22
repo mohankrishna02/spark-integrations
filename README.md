@@ -7,6 +7,7 @@
 |[Spark-MySQL Integration](#spark-mysql-integration)         |
 |[Spark-MSSQL Integration](#spark-mssql-integration)         |
 |[Spark-Cassandra Integration](#spark-cassandra-integration) |
+|[Spark-GCP Integration](#spark-gcp-integration)             |
 
 ### Spark-MySQL Integration
 * Open Spark Shell 
@@ -96,5 +97,42 @@ df.show()
 .option("table","target_tablename")
 .save()
 ```
+
+
+### Spark-GCP Integration
+
+* Note :- Download the GCS Connector Hadoop Jar file
+
+* Read the data from GCP Cloud Storage using Spark
+
+```sh
+val spark = SparkSession.builder()
+    .config("spark.hadoop.fs.gs.impl","com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
+    .config("spark.hadoop.fs.AbstractFileSystem.gs.impl","com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS")
+    .getOrCreate()
+
+    val df = spark.read.format("csv").option("header", true)
+    .option("fs.gs.project.id", "YOUR PROJECT ID")
+    .option("google.cloud.auth.service.account.json.keyfile", "GOOGLE ACCOUNT JSON KEY FILE PATH")
+    .load("BUCKET LOCATION")
+    df.show()
+```
+
+* Write the data into the GCP Cloud Storage using Spark
+
+```sh
+val spark = SparkSession.builder()
+    .config("spark.hadoop.fs.gs.impl","com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
+    .config("spark.hadoop.fs.AbstractFileSystem.gs.impl","com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS")
+    .getOrCreate()
+
+    val df = spark.read.format("csv").option("header", true)
+    .option("fs.gs.project.id", "YOUR PROJECT ID")
+    .option("google.cloud.auth.service.account.json.keyfile", "GOOGLE ACCOUNT JSON KEY FILE PATH")
+    .load("BUCKET LOCATION")
+    df.show()
+val findf = df.write.format("csv").save("BUCKET LOCATION")
+```
+
 **[⬆ Back to Top](#table-of-contents)**
 
