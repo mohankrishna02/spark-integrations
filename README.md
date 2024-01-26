@@ -9,6 +9,7 @@
 |[Spark-Cassandra Integration](#spark-cassandra-integration) |
 |[Spark-GCP Integration](#spark-gcp-integration)             |
 |[Spark-Azure Integration](#spark-azure-integration)         |
+|[Spark-AWS Integration](#spark-aws-integration)             |
 
 ### Spark-MySQL Integration
 * Open Spark Shell 
@@ -166,3 +167,25 @@ val azurestorageaccountname = "azurestoragebigdata" // Your Storage Account Name
 val findf = fildf.write.format("csv").save(s"wasbs://$containername@$azurestorageaccountname.blob.core.windows.net/filterdata.csv")
 ```
 **[⬆ Back to Top](#table-of-contents)**
+
+### Spark-AWS Integration
+
+* Read the data from AWS S3 storage using spark.
+```sh
+    val df = spark.read.format("csv")
+ .option("header", true)
+ .option("fs.s3a.access.key", "YOUR ACCESS KEY")
+ .option("fs.s3a.secret.key", "YOUR SECRET KEY")
+ .load("FILEPATH")
+```
+* Write the data into the AWS S3 Storage using Spark
+```sh
+val finaldf = df.write.format("csv")
+ .option("header", true)
+ .option("fs.s3a.access.key", "YOUR ACCESS KEY")
+ .option("fs.s3a.secret.key", "YOUR SECRET KEY")
+ .load("TARGET DIRECTORY")
+```
+**[⬆ Back to Top](#table-of-contents)**
+
+
