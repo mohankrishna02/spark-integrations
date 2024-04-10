@@ -10,6 +10,7 @@
 |[Spark-GCP Integration](#spark-gcp-integration)             |
 |[Spark-Azure Integration](#spark-azure-integration)         |
 |[Spark-AWS Integration](#spark-aws-integration)             |
+|[Spark-SNOWFLAKE Integration](#spark-snowflake-integration) |
 
 ### Spark-MySQL Integration
 * Open Spark Shell 
@@ -185,6 +186,41 @@ val finaldf = df.write.format("csv")
  .option("fs.s3a.access.key", "YOUR ACCESS KEY")
  .option("fs.s3a.secret.key", "YOUR SECRET KEY")
  .load("TARGET DIRECTORY")
+```
+**[⬆ Back to Top](#table-of-contents)**
+
+
+### Spark-SNOWFLAKE Integration
+
+* For Spark Snowflake Integration you need Spark Snowflake Dependency. You can get the depencdency from here [Spark Snowflake Maven Repository](https://mvnrepository.com/artifact/net.snowflake/spark-snowflake)
+
+* Read the data from Snowflake table using spark.
+```sh
+  val finaldf = df.read.format("snowflake")
+.option("sfURL","SNOWFLAKE URL")
+.option("sfAccount","ACCOUNTNAME")
+.option("sfUser","USERNAME")
+.option("sfPassword","PASSWORD")
+.option("sfDatabase","DATABASE NAME")
+.option("sfSchema","SCHEMA NAME")
+.option("sfRole","ACCOUNTADMIN")
+.option("sfWarehouse","COMPUTE_WH")
+.option("dbtable","TABLE NAME")
+.load()
+```
+* Write the data into the Snowflake table using Spark
+```sh
+df.write.mode("overwrite").format("snowflake")
+.option("sfURL","SNOWFLAKE URL")
+.option("sfAccount","ACCOUNTNAME")
+.option("sfUser","USERNAME")
+.option("sfPassword","PASSWORD")
+.option("sfDatabase","DATABASE NAME")
+.option("sfSchema","SCHEMA NAME")
+.option("sfRole","ACCOUNTADMIN")
+.option("sfWarehouse","COMPUTE_WH")
+.option("dbtable","TABLE NAME")
+.save()
 ```
 **[⬆ Back to Top](#table-of-contents)**
 
